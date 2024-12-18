@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://crrvqyiertaho"]
+
+[ext_resource type="Script" path="res://Player/Henren.gd" id="1_65dww"]
+[ext_resource type="Texture2D" uid="uid://bc8tjkfayqbn2" path="res://Asset/Player/wolfman.png" id="1_pu4eh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dcgv3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pu4eh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u3ys8"]
+radius = 21.0
+height = 88.0
+
+[node name="Henren" type="CharacterBody2D"]
+script = ExtResource("1_65dww")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dcgv3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_u3ys8")

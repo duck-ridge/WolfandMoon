@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://cmvdpq1y6ltek"]
+
+[ext_resource type="Script" path="res://Scene/Scene3D.gd" id="1_wm75d"]
+[ext_resource type="PackedScene" uid="uid://tue5otv2i68n" path="res://Tower/Tower.tscn" id="3_1cr8q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6lwf5"]
+albedo_color = Color(0.109804, 0.388235, 0.12549, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jo5yb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t7rt5"]
+size = Vector3(8, 1, 8)
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_sdbei"]
+
+[node name="Scene3D" type="Node3D"]
+script = ExtResource("1_wm75d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0.00272271, 0, -0.00272271, 4, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_6lwf5")
+mesh = SubResource("PlaneMesh_jo5yb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, -0.5, 2.08165e-12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_t7rt5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.046008, 0.998941, 0, -0.998941, 0.046008, 0, 4.11054, 0)
+light_energy = 9.795
+
+[node name="Tower" parent="." instance=ExtResource("3_1cr8q")]
+
+[node name="Recorder" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_sdbei")
+autoplay = true
+bus = &"Record"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Create" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Create Server"
+
+[node name="Join" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Join Server"
+
+[node name="Players" type="Node" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Player/Henren3d.tscn")
+spawn_path = NodePath("../Players")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.80062, 2.92805)
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Create" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/Join" to="." method="_on_join_pressed"]

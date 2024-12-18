@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bix7ahlub1v8b"]
+
+[ext_resource type="Texture2D" uid="uid://bc8tjkfayqbn2" path="res://Asset/Player/wolfman.png" id="1_rata6"]
+[ext_resource type="Script" path="res://Player/Henren3d.gd" id="1_to03k"]
+[ext_resource type="Texture2D" uid="uid://dqnkpl7fwntgk" path="res://Asset/Icon/upstair.png" id="3_05uec"]
+[ext_resource type="AudioStream" uid="uid://bg5n0mxx00f7u" path="res://Asset/Sound/WolfShout.mp3" id="4_y8okm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fk2th"]
+size = Vector3(0.6, 1, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7gyun"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_j4yup"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("CharSprite3D:scale")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_oag8m"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_to03k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="CharSprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_rata6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_fk2th")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_7gyun")
+
+[node name="UpIcon" type="Sprite3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0.766688, 0)
+visible = false
+texture = ExtResource("3_05uec")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_y8okm")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_j4yup")
+
+[node name="Recorder" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamMicrophone_oag8m")
+autoplay = true
+bus = &"Record"
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

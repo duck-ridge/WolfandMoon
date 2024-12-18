@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bevk1av8532sm"]
+
+[ext_resource type="PackedScene" uid="uid://crrvqyiertaho" path="res://Player/Henren.tscn" id="1_6vwqv"]
+[ext_resource type="Texture2D" uid="uid://72hnmv4e6vrk" path="res://Asset/Background/sky.png" id="2_qwqcb"]
+[ext_resource type="Texture2D" uid="uid://jyjtvgel64ts" path="res://Asset/Tower/tower.png" id="3_h5bnm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbi8l"]
+size = Vector2(90, 20)
+
+[node name="Scene" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(421, 616)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_hbi8l")
+
+[node name="Henren" parent="." instance=ExtResource("1_6vwqv")]
+position = Vector2(423, 511)
+
+[node name="Sky" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+texture = ExtResource("2_qwqcb")
+
+[node name="Tower" type="Sprite2D" parent="."]
+position = Vector2(560, 400)
+texture = ExtResource("3_h5bnm")

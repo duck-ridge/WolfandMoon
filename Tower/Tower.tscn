@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://tue5otv2i68n"]
+
+[ext_resource type="Texture2D" uid="uid://jyjtvgel64ts" path="res://Asset/Tower/tower.png" id="1_vhcno"]
+[ext_resource type="Script" path="res://Tower/Tower.gd" id="2_bpyea"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_08a8u"]
+
+[node name="Tower" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4757, 0)
+collision_layer = 256
+collision_mask = 256
+script = ExtResource("2_bpyea")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_vhcno")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.127257, -1.87539, 0)
+shape = SubResource("BoxShape3D_08a8u")
